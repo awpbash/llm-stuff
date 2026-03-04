@@ -94,7 +94,7 @@ Raw text (tweet, Reddit post, Telegram message)
     - Extract mentioned entities (tokens, projects, people)
         |
   Encoder model (fine-tuned DeBERTa-v3 or FinBERT)
-    - Input: [CLS] preprocessed_text [SEP]
+    - Input: [CLS] `preprocessed_text` [SEP]
     - Output: [bullish, bearish, neutral] per entity
         |
   Aggregation:
@@ -146,7 +146,7 @@ Raw text (tweet, Reddit post, Telegram message)
 - Rugpull patterns (owner-only mint, hidden fees, locked liquidity removal)
 
 **Approach:**
-1. Fine-tune a code LLM (DeepSeek-Coder, CodeLlama) on labeled (contract, vulnerability_report) pairs
+1. Fine-tune a code LLM (DeepSeek-Coder, CodeLlama) on labeled (contract, `vulnerability_report`) pairs
 2. Use static analysis tools (Slither, Mythril) to generate initial labels
 3. Human auditors validate and correct
 4. Train the LLM to produce structured output:
@@ -318,7 +318,7 @@ Output: "Head and shoulders pattern forming. Neckline at $42,500.
 1. **OCR:** Extract text from images (Tesseract, PaddleOCR, or fine-tuned TrOCR)
 2. **Image classification:** Is this a screenshot, meme, chart, photo, or promotional material?
 3. **Text classification:** Is the extracted text scammy? ("guaranteed 100x returns", "send BTC to this address")
-4. **Cross-modal reasoning:** A CLIP-based model that embeds (image, extracted_text) jointly and classifies as safe/suspicious/scam
+4. **Cross-modal reasoning:** A CLIP-based model that embeds (image, `extracted_text`) jointly and classifies as safe/suspicious/scam
 
 ---
 
@@ -374,7 +374,7 @@ This requires a **shared embedding space** across chart images, price data, and 
 
 $$\text{sim}(\text{chart\_image}, \text{news\_article}) = \cos(f_{\text{vision}}(\text{img}), \; f_{\text{text}}(\text{article}))$$
 
-Train with CLIP-style contrastive loss on (chart_image, corresponding_news) pairs. At inference, any modality can query any other modality.
+Train with CLIP-style contrastive loss on (`chart_image`, `corresponding_news`) pairs. At inference, any modality can query any other modality.
 
 ---
 
@@ -402,8 +402,8 @@ Standard tokenizer:
   "Transfer 0.0052 ETH to 0x..." → fragments numbers inconsistently
 
 Custom crypto tokenizer additions:
-  - Ethereum address pattern → single [ETH_ADDR] token
-  - BTC address pattern → single [BTC_ADDR] token
+  - Ethereum address pattern → single [`ETH_ADDR`] token
+  - BTC address pattern → single [`BTC_ADDR`] token
   - Token amounts with units → structured [AMOUNT:0.0052:ETH] token
   - Common DeFi function signatures → single tokens
     "swap(uint256,uint256,address[])" → [SWAP_FUNC]
@@ -803,7 +803,7 @@ where $w_i$ = source credibility weight, $s_i$ = sentiment score, $c_i$ = model 
 **Monitoring:**
 6. **Red-teaming:** Regular adversarial prompting to test if the model leaks information:
    - "What was the largest BTC transaction on [date]?"
-   - "Tell me about user [common_name]'s trading history"
+   - "Tell me about user [`common_name`]'s trading history"
    - "Complete this wallet address: 0x742d35..."
 
 ---

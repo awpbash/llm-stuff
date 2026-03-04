@@ -56,7 +56,7 @@ This explains why both neural (Word2Vec) and count-based (SVD on PMI matrix) met
 
 ---
 
-### Q3. You have a bi-encoder that gives cosine similarity 0.87 for (query, doc_A) and 0.84 for (query, doc_B). A cross-encoder reranker reverses the ranking, giving doc_B a higher score. Which should you trust, and why?
+### Q3. You have a bi-encoder that gives cosine similarity 0.87 for (query, `doc_A`) and 0.84 for (query, `doc_B`). A cross-encoder reranker reverses the ranking, giving `doc_B` a higher score. Which should you trust, and why?
 
 **A:** Trust the **cross-encoder**.
 
@@ -107,8 +107,8 @@ OpenAI's `text-embedding-3-small/large` supports this — you set `dimensions=25
 **A:** Embedding drift occurs when the embedding model is updated (retrained, fine-tuned, or version-bumped) and old embeddings in the index are no longer compatible with new query embeddings.
 
 **Detection:**
-1. **Canary set monitoring:** Maintain a fixed set of ~1000 (query, relevant_doc) pairs with known ground truth. After any model update, compute recall@10 on this canary set. If recall drops > 2%, flag drift.
-2. **Distribution shift detection:** Track the distribution of cosine similarities for random (query, retrieved_doc) pairs. If the mean similarity shifts significantly (KS test p < 0.01), the embedding space has changed.
+1. **Canary set monitoring:** Maintain a fixed set of ~1000 (query, `relevant_doc`) pairs with known ground truth. After any model update, compute recall@10 on this canary set. If recall drops > 2%, flag drift.
+2. **Distribution shift detection:** Track the distribution of cosine similarities for random (query, `retrieved_doc`) pairs. If the mean similarity shifts significantly (KS test p < 0.01), the embedding space has changed.
 3. **Online A/B metrics:** Click-through rate, user satisfaction signals degrade when embeddings drift.
 
 **Handling strategies:**
@@ -209,7 +209,7 @@ A low $\tau$ sharpens the distribution, creating strong gradients away from unif
 
 **Model selection:**
 - Use `multilingual-e5-large` (1024 dims) — strong multilingual performance, instruction-aware prefixes (`query:` / `passage:`), open-source
-- Fine-tune on 50K labeled (query, transaction_description) pairs mined from Binance support logs
+- Fine-tune on 50K labeled (query, `transaction_description`) pairs mined from Binance support logs
 - Output: 1024-dim normalized embeddings
 
 **Indexing architecture:**
@@ -630,7 +630,7 @@ Generate labels for 100K (query, document) pairs sampled from your production qu
 - Fine-tune on domain-specific data using either method 1 or 2
 
 **4. Contrastive from click-through data:**
-- If you have search logs with clicks: (query, clicked_doc) = positive, (query, shown_but_not_clicked) = negative
+- If you have search logs with clicks: (query, `clicked_doc`) = positive, (query, `shown_but_not_clicked`) = negative
 - Noisy but effective at scale. De-bias for position bias (users click higher-ranked results more).
 
 **My approach for Binance:** Start with MS MARCO cross-encoder (free, strong baseline). Generate 50K labels using an LLM on Binance-specific queries. Fine-tune. Iterate with self-training using production click data.
@@ -772,7 +772,7 @@ For each (query, ground_truth_answer) in test set:
 
 **Fixes:**
 - Add timestamps to documents and filter by recency for factual queries
-- Use metadata (document type, last_updated) to prefer authoritative/current sources
+- Use metadata (document type, `last_updated`) to prefer authoritative/current sources
 - Overlap chunks to prevent boundary splits
 - Query decomposition to disambiguate vague queries before retrieval
 - Conflict resolution: when multiple documents disagree, flag uncertainty or prefer the most recent / most authoritative source

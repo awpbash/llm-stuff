@@ -1063,7 +1063,7 @@ Real-time updates:
 **Elasticsearch management:**
 - Use index aliases for zero-downtime updates
 - Configure `number_of_shards` based on document count
-- Enable `_source: false` for BM25-only index (save storage)
+- Enable ``_source: false`` for BM25-only index (save storage)
 
 ---
 

@@ -1015,7 +1015,7 @@ For retrieval over live data (live trading prices, real-time news):
 
 ### 13.5 Cost Optimization
 
-**Cache common queries:** A Redis cache keyed by (query_hash, index_version). Crypto support sees high query repetition.
+**Cache common queries:** A Redis cache keyed by (`query_hash`, `index_version`). Crypto support sees high query repetition.
 
 **Tiered retrieval:** BM25 first (virtually free), then dense retrieval only when BM25 confidence is low. BM25 handles most FAQ-type queries perfectly well.
 
@@ -1214,7 +1214,7 @@ The hypothetical answer is passage-like in style and vocabulary, making it close
 
 3. **Reranker selection:** Use `cross-encoder/ms-marco-MiniLM-L-6-v2` (6-layer, fast) rather than a large cross-encoder. 50ms reranking time instead of 300ms.
 
-4. **Query caching:** Cache (query_hash → retrieved_chunks) with 1-hour TTL in Redis. At 50K docs with moderate query overlap, cache hit rates of 30-50% are achievable.
+4. **Query caching:** Cache (`query_hash` → `retrieved_chunks`) with 1-hour TTL in Redis. At 50K docs with moderate query overlap, cache hit rates of 30-50% are achievable.
 
 5. **Embedding caching:** Cache query embeddings. If the same query arrives twice, skip the embedding call.
 

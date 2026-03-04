@@ -910,7 +910,7 @@ Higher $T$ produces a more uniform language distribution. mBERT uses $T = 0.7$.
 
 **Step 1: Check MTEB but don't stop there.** MTEB provides general benchmark scores. Use it for initial shortlisting.
 
-**Step 2: Build a domain-specific eval set.** For Binance: 100-500 (query, relevant_document) pairs from your domain (crypto news, user queries, on-chain data descriptions). Use a cross-encoder or human annotators to create relevance labels.
+**Step 2: Build a domain-specific eval set.** For Binance: 100-500 (query, `relevant_document`) pairs from your domain (crypto news, user queries, on-chain data descriptions). Use a cross-encoder or human annotators to create relevance labels.
 
 **Step 3: Benchmark on your eval set.** Measure NDCG@10, Recall@100 using your domain eval set. The MTEB winner may not win here.
 
